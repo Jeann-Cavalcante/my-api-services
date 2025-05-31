@@ -1,17 +1,12 @@
 import express from "express";
-import prismaClient from "./prisma";
+import cors from "cors";
+import { router } from "./routes";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
-app.get("/", async (req, res) => {
-  const userCount = await prismaClient.user.count();
-  res.json(
-    userCount == 0
-      ? "No users have been added yet."
-      : "Some users have been added to the database."
-  );
-});
+app.use(router);
 
 const PORT = 3333;
 
