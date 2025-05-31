@@ -1,0 +1,62 @@
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      String      @id @default(cuid())
+  name    String?  @db.VarChar(255)
+  email   String   @unique @db.VarChar(255)
+  password String   @db.VarChar(255)
+  isActive Boolean  @default(true)
+
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  userRoles UserRole[] 
+  sessions  Session[]
+
+  @@map("users")
+}
+
+model Role {
+  id   String    @id @default(cuid())
+  name String @unique @db.VarChar(255)
+  userRoles UserRole[]
+
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  @@map("roles")
+}
+
+model UserRole {
+  userId String 
+  roleId String
+  user   User @relation(fields: [userId], references: [id])
+  role   Role @relation(fields: [roleId], references: [id])
+  
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @unique @db.VarChar(255)
+  expiresAt DateTime @db.Timestamp(6)
+
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  @@map("sessions")
+}
+
