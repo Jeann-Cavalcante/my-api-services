@@ -3,7 +3,6 @@ import { hash } from "bcryptjs";
 import prismaClient from "../../prisma";
 
 type User = {
-  id: string;
   name: string;
   email: string;
   password: string;
