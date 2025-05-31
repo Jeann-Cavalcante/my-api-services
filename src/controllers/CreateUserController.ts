@@ -3,7 +3,7 @@ import { CreateUserService } from "../services/user/CreateUserService";
 
 class CreateUserController {
   async handle(req: Request, res: Response) {
-    const { name, email, password, isActive } = req.body;
+    const { name, email, password } = req.body;
 
     // Validate input
     if (!name || !email || !password) {
@@ -15,11 +15,12 @@ class CreateUserController {
     try {
       // Call the service to create the user
       const userService = new CreateUserService();
+
       const user = await userService.execute({
         name,
         email,
         password,
-        isActive,
+        isActive: true,
       });
 
       return res.status(201).json(user);
