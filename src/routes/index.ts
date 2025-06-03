@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { CreateUserController } from "../controllers/CreateUserController";
 import prismaClient from "../prisma";
+import { AuthUserController } from "../controllers/AuthUserController";
 
 const router = Router();
 // const createUserController = new CreateUserController();
@@ -15,6 +16,8 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/users", new CreateUserController().handle);
+
+router.post("/auth", new AuthUserController().handle);
 
 // router.post("/users", async (req: Request, res: Response) => {
 //   await createUserController.handle(req, res);
