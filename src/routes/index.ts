@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
   res.json(
     userCount == 0
       ? "No users have been added yet."
-      : "Some users have been added to the database."
+      : "Some users have been added to the database. Total users: " + userCount
   );
 });
 
