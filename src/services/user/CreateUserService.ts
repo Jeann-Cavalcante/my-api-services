@@ -33,6 +33,12 @@ class CreateUserService {
         password: passwordHash,
         isActive,
       },
+
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
     });
 
     return user;

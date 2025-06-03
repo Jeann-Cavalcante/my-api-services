@@ -14,13 +14,7 @@ router.get("/", async (req, res) => {
   );
 });
 
-router.post(
-  "/users",
-  new CreateUserController().handle as unknown as (
-    req: Request,
-    res: Response
-  ) => Promise<void>
-);
+router.post("/users", new CreateUserController().handle);
 
 // router.post("/users", async (req: Request, res: Response) => {
 //   await createUserController.handle(req, res);
